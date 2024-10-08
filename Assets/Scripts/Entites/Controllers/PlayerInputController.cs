@@ -5,8 +5,9 @@ public class PlayerInputController : TopDownController
 {
     private Camera camera;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         camera = Camera.main;
     }
 
@@ -19,10 +20,16 @@ public class PlayerInputController : TopDownController
 
     public void OnLook(InputValue value)
     {
+        
         Vector2 newAim = value.Get<Vector2>();
         Vector2 worldPos = camera.ScreenToWorldPoint(newAim);
         newAim = (worldPos - (Vector2)transform.position).normalized;
-
+        
         CallLookEvent(newAim);
+    }
+
+    public void OnFire(InputValue value)
+    {
+       isAttacking = value.isPressed;
     }
 }
